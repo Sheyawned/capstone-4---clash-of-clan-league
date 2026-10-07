@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Clash League</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <h1>Where do you stand this season?</h1>
+        <p>Enter your player tag to see your league rank and how far your remaining attacks could take you.</p>
+      </header>
+
+      <section class="search">
+        <form method="post" action="/player">
+          <label for="playerTag">Player tag</label>
+          <div class="search-row">
+            <input
+              id="playerTag"
+              type="text"
+              name="id"
+              placeholder="#QG9P2PLRR"
+              autocomplete="off"
+              required
+            />
+            <button type="submit">Check rank</button>
+          </div>
+        </form>
+
+        <% if (locals.error || locals.bug) { %>
+          <p class="error" role="alert">
+            We couldn't find that player. Check the tag and try again.
+          </p>
+        <% } %>
+      </section>
+
+      <% if (locals.username) { %>
+        <section class="result">
+          <div class="player">
+            <h2><%= locals.username %></h2>
+            <p class="tag">#<%= locals.playerTag %></p>
+            <p class="league"><%= locals.currentLeague %></p>
+          </div>
+
+          <div class="rank">
+            <span class="rank-number"><%= locals.currentRanking %></span>
+            <span class="rank-label">current rank</span>
+          </div>
+
+          <dl class="stats">
+            <div class="stat">
+              <dt>Trophies</dt>
+              <dd><%= locals.trophies %></dd>
+            </div>
+            <div class="stat">
+              <dt>Potential trophies</dt>
+              <dd><%= locals.potentialTrophies %></dd>
+            </div>
+            <div class="stat">
+              <dt>Potential rank</dt>
+              <dd><%= locals.potentialRanking %></dd>
+            </div>
+          </dl>
+        </section>
+      <% } %>
+    </main>
+  </body>
+</html>
